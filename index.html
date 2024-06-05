@@ -87,6 +87,13 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "e2967c03c1174027a40f838960a4fe5b"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -99,9 +106,131 @@
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
-
     // Start your code here
     // You may move this JS to another file if you wish
+    // console.log button
+    errorBtns[0].addEventListener('click', e => {
+      console.log('Console.log Butons: ', errorBtns);
+    });
+    //console.error button
+    errorBtns[1].addEventListener('click', e=> {
+      console.error("Calculator Error!");
+    });
+    // console.count button
+    errorBtns[2].addEventListener('click', e=> {
+      console.count();
+    });
+    // console.warn button
+    errorBtns[3].addEventListener('click', e=> {
+      console.warn('Don\'t do anything insane!');
+    });
+    // console.assert button
+    errorBtns[4].addEventListener('click', e=> {
+      const numBtns = errorBtns.length;
+      console.assert(numBtns != 15, 'There should be 15 buttons!');
+    });
+    // console.clear button
+    errorBtns[5].addEventListener('click', e=> {
+      console.clear();
+    });
+    // console.dir button
+    errorBtns[6].addEventListener('click', e=> {
+      console.dir(document.head);
+    });
+    // console.dirxml button
+    errorBtns[7].addEventListener('click', e=> {
+      console.dirxml(document);
+    });
+    // console Group Start
+    errorBtns[8].addEventListener('click', e=> {
+      console.group('animals');
+    });
+    // console Group End
+    errorBtns[9].addEventListener('click', e=> {
+      console.groupEnd('animals');
+    });
+    // console.table
+    errorBtns[10].addEventListener('click', e=> {
+      let table = [
+        {
+          number: 1,
+          doubled: 2,
+          squared: 1,
+        },
+        {
+          number: 2,
+          doubled: 4,
+          squared: 4,
+        },
+        {
+          number: 3,
+          doubled: 6,
+          squared: 9,
+        },
+        {
+          number: 4,
+          doubled: 8,
+          squared: 16,
+        },
+        {
+          number: 5,
+          doubled: 10,
+          squared: 25,
+        },
+      ];
+      console.table(table);
+    });
+    // start timer
+    errorBtns[11].addEventListener('click', e=> {
+      console.time();
+    });
+    // end timer
+    errorBtns[12].addEventListener('click', e=> {
+      console.timeEnd();
+    });
+    // console.trace
+    errorBtns[13].addEventListener('click', e=> {
+      const first = () => { second(); };
+      const second = () => { third(); };
+      const third = () => { fourth(); };
+      const fourth = () => { console.trace(); };
+      first();
+    });
+    // trigger a global error
+    errorBtns[14].addEventListener('click', e=> {
+      throw new Error('This is a global error!');
+    });
+
+    // Random error generator
+    function throwRandomError() {
+      if (Math.random() > 0.5) {
+        throw new RandomError('Random Error!');
+      }
+    }
+
+    // Throw error with 50% probability every 10 seconds
+    setInterval(() => {
+      try {
+        throwRandomError();
+      } catch (e) {
+        console.error(e);
+      }
+      finally {
+        console.log('Random Chance of Error!');
+      }
+    }, 10000);
+
+    class RandomError extends Error {
+      constructor(message) {
+        super(message); // (1)
+        this.name = "RandomError"; // (2)
+      }
+    }
+
+    // Listen to window error events
+    window.addEventListener('error', (event) => {
+      console.log('Unfortunately we have an error');
+    });
   </script>
 </body>
 
